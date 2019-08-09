@@ -16,7 +16,8 @@ func CreateICS(months []phenomena.Month) string {
 		for rawDate, day := range month {
 			for _, scheduling := range day {
 				rawDatetime := fmt.Sprintf("%s %s", rawDate, scheduling.Time)
-				startsAt, _ := time.Parse("2006-01-02 15:04h", rawDatetime)
+				location, _ := time.LoadLocation("Europe/Madrid")
+				startsAt, _ := time.ParseInLocation("2006-01-02 15:04h", rawDatetime, location)
 				endsAt := startsAt.Add(time.Minute * time.Duration(scheduling.Duration))
 
 				event := cal.AddEvent(fmt.Sprintf("%s@phenomena_calendar", rawDatetime))
@@ -26,7 +27,8 @@ func CreateICS(months []phenomena.Month) string {
 				event.SetDtStampTime(time.Now())
 				event.SetModifiedAt(time.Now())
 				event.SetSummary(scheduling.Title)
-				event.SetLocation(scheduling.Url)
+				description := fmt.Sprintf("You can buy tickets at %s", scheduling.Url)
+				event.SetDescription(description)
 			}
 		}
 	}
