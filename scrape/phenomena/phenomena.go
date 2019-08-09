@@ -13,6 +13,7 @@ import (
 type scheduling struct {
 	Time  string `json:"time"`
 	Title string `json:"title"`
+	Url   string `json:"url"`
 }
 
 type day []scheduling
@@ -52,8 +53,13 @@ func FetchMonth(year, month int) Month {
 		s.Find(".cal-film").Each(func(i int, s *goquery.Selection) {
 			title := s.Find(".cal-film-texto").Text()
 			time := s.Find(".cal-film-hora").Text()
+			url, _ := s.Find(".pasemodalficha > a").Attr("href")
 
-			day = append(day, scheduling{Time: trim(time), Title: trim(title)})
+			day = append(day, scheduling{
+				Time:  trim(time),
+				Title: trim(title),
+				Url:   url,
+			})
 
 			fullDate := fmt.Sprintf("%d-%02d-%02d", year, month, dayNumber)
 			m[fullDate] = day

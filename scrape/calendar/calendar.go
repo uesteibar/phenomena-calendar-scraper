@@ -28,8 +28,8 @@ func CreateICS(months []phenomena.Month) string {
 				event.SetDtStampTime(time.Now())
 				event.SetModifiedAt(time.Now())
 				event.SetSummary(scheduling.Title)
+				event.SetURL(scheduling.Url)
 			}
-
 		}
 	}
 
