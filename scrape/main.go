@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"time"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -17,9 +18,11 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	currentMonth := phenomena.FetchMonth(2019, 8)
-	nextMonth := phenomena.FetchMonth(2019, 9)
-	ics := calendar.CreateICS([]phenomena.Month{currentMonth, nextMonth})
+	now := time.Now()
+	year, month, _ := now.Date()
+	currentMonthSchedule := phenomena.FetchMonth(year, int(month))
+	nextMonthSchedule := phenomena.FetchMonth(year, int(month)+1)
+	ics := calendar.CreateICS([]phenomena.Month{currentMonthSchedule, nextMonthSchedule})
 
 	resp := Response{
 		StatusCode:      200,
