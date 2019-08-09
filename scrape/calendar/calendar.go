@@ -9,26 +9,28 @@ import (
 	"github.com/uesteibar/phenomena_calendar_scraper/scrape/phenomena"
 )
 
-func CreateICS(m phenomena.Month) string {
+func CreateICS(months []phenomena.Month) string {
 	cal := ics.NewCalendar()
 	cal.SetMethod(ics.MethodRequest)
 
-	for rawDate, day := range m {
-		for _, scheduling := range day {
-			rawDatetime := fmt.Sprintf("%s %s", rawDate, scheduling.Time)
-			log.Println(rawDatetime)
-			startsAt, _ := time.Parse("2006-01-02 15:04h", rawDatetime)
-			endsAt := startsAt.Add(time.Hour * 2) // TODO: get duration from scraper
+	for _, month := range months {
+		for rawDate, day := range month {
+			for _, scheduling := range day {
+				rawDatetime := fmt.Sprintf("%s %s", rawDate, scheduling.Time)
+				log.Println(rawDatetime)
+				startsAt, _ := time.Parse("2006-01-02 15:04h", rawDatetime)
+				endsAt := startsAt.Add(time.Hour * 2) // TODO: get duration from scraper
 
-			event := cal.AddEvent(fmt.Sprintf("%s@phenomena_calendar", rawDatetime))
-			event.SetStartAt(startsAt)
-			event.SetEndAt(endsAt)
-			event.SetCreatedTime(time.Now())
-			event.SetDtStampTime(time.Now())
-			event.SetModifiedAt(time.Now())
-			event.SetSummary(scheduling.Title)
+				event := cal.AddEvent(fmt.Sprintf("%s@phenomena_calendar", rawDatetime))
+				event.SetStartAt(startsAt)
+				event.SetEndAt(endsAt)
+				event.SetCreatedTime(time.Now())
+				event.SetDtStampTime(time.Now())
+				event.SetModifiedAt(time.Now())
+				event.SetSummary(scheduling.Title)
+			}
+
 		}
-
 	}
 
 	return cal.Serialize()

@@ -17,8 +17,9 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	month := phenomena.FetchMonth(2019, 8)
-	ics := calendar.CreateICS(month)
+	currentMonth := phenomena.FetchMonth(2019, 8)
+	nextMonth := phenomena.FetchMonth(2019, 9)
+	ics := calendar.CreateICS([]phenomena.Month{currentMonth, nextMonth})
 
 	resp := Response{
 		StatusCode:      200,
