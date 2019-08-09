@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/uesteibar/phenomena_calendar_scraper/scrape/phenomena"
 )
 
 // Response is of type APIGatewayProxyResponse since we're leveraging the
@@ -19,8 +20,11 @@ type Response events.APIGatewayProxyResponse
 func Handler(ctx context.Context) (Response, error) {
 	var buf bytes.Buffer
 
+	month := phenomena.FetchMonth(2019, 8)
+
 	body, err := json.Marshal(map[string]interface{}{
-		"message": "Go Serverless v1.0! Your function executed successfully!",
+		"message":  "Go Serverless v1.0! Your function executed successfully!",
+		"calendar": month,
 	})
 	if err != nil {
 		return Response{StatusCode: 404}, err

@@ -8,3 +8,6 @@ clean:
 
 deploy: clean build
 	sls deploy --verbose --force
+
+run: clean build
+	sls invoke local -f scrape
