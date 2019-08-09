@@ -9,5 +9,8 @@ clean:
 deploy: clean build
 	sls deploy --verbose --force
 
+deploy.prod: clean build
+	sls deploy --verbose --force --stage production
+
 run: clean build
 	sls invoke local -f scrape
