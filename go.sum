@@ -3,6 +3,8 @@ github.com/PuerkitoBio/goquery v1.5.0 h1:uGvmFXOA73IKluu/F84Xd1tt/z07GYm8X49XKHP
 github.com/PuerkitoBio/goquery v1.5.0/go.mod h1:qD2PgZ9lccMbQlc7eEOjaeRlFQON7xY8kdmcsrnKqMg=
 github.com/andybalholm/cascadia v1.0.0 h1:hOCXnnZ5A+3eVDX8pvgl4kofXv2ELss0bKcqRySc45o=
 github.com/andybalholm/cascadia v1.0.0/go.mod h1:GsXiBklL0woXo1j/WYWtSYYC4ouU9PqHO0sqidkEA4Y=
+github.com/arran4/golang-ical v0.0.0-20190711113309-f39a345f6c4e h1:xc9dJ3cA8GGX+OL3l7IzTVml3PDPUvBs5yVf32fHeuE=
+github.com/arran4/golang-ical v0.0.0-20190711113309-f39a345f6c4e/go.mod h1:iDFK01A1Yb5HiGn6YEaZ516fCow5FnEAjyMfOOIYMuo=
 github.com/aws/aws-lambda-go v1.12.1 h1:rMToYOcPFYDixQ7VNNPg78LmiqPgWD5f8zdLL+EsDAk=
 github.com/aws/aws-lambda-go v1.12.1/go.mod h1:z4ywteZ5WwbIEzG0tXizIAUlUwkTNNknX4upd5Z5XJM=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

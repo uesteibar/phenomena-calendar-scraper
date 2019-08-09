@@ -55,7 +55,7 @@ func FetchMonth(year, month int) Month {
 
 			day = append(day, scheduling{Time: trim(time), Title: trim(title)})
 
-			fullDate := fmt.Sprintf("%d-%d-%d", year, month, dayNumber)
+			fullDate := fmt.Sprintf("%d-%02d-%02d", year, month, dayNumber)
 			m[fullDate] = day
 		})
 	})

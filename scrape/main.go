@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/uesteibar/phenomena_calendar_scraper/scrape/calendar"
 	"github.com/uesteibar/phenomena_calendar_scraper/scrape/phenomena"
 )
 
@@ -18,26 +17,18 @@ type Response events.APIGatewayProxyResponse
 
 // Handler is our lambda handler invoked by the `lambda.Start` function call
 func Handler(ctx context.Context) (Response, error) {
-	var buf bytes.Buffer
-
 	month := phenomena.FetchMonth(2019, 8)
-
-	body, err := json.Marshal(map[string]interface{}{
-		"message":  "Go Serverless v1.0! Your function executed successfully!",
-		"calendar": month,
-	})
-	if err != nil {
-		return Response{StatusCode: 404}, err
-	}
-	json.HTMLEscape(&buf, body)
+	ics := calendar.CreateICS(month)
 
 	resp := Response{
 		StatusCode:      200,
 		IsBase64Encoded: false,
-		Body:            buf.String(),
+		Body:            ics,
 		Headers: map[string]string{
-			"Content-Type":           "application/json",
-			"X-MyCompany-Func-Reply": "hello-handler",
+			"Content-Type":        "text/calendar",
+			"charset":             "utf-8",
+			"Content-Disposition": "inline",
+			"filename":            "phenomena_calendar.ics",
 		},
 	}
 
