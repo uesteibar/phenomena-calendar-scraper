@@ -2,7 +2,6 @@ package calendar
 
 import (
 	"fmt"
-	"log"
 	"time"
 
 	ics "github.com/arran4/golang-ical"
@@ -17,9 +16,8 @@ func CreateICS(months []phenomena.Month) string {
 		for rawDate, day := range month {
 			for _, scheduling := range day {
 				rawDatetime := fmt.Sprintf("%s %s", rawDate, scheduling.Time)
-				log.Println(rawDatetime)
 				startsAt, _ := time.Parse("2006-01-02 15:04h", rawDatetime)
-				endsAt := startsAt.Add(time.Hour * 2) // TODO: get duration from scraper
+				endsAt := startsAt.Add(time.Minute * time.Duration(scheduling.Duration))
 
 				event := cal.AddEvent(fmt.Sprintf("%s@phenomena_calendar", rawDatetime))
 				event.SetStartAt(startsAt)

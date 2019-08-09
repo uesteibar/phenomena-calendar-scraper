@@ -11,9 +11,10 @@ import (
 )
 
 type scheduling struct {
-	Time  string `json:"time"`
-	Title string `json:"title"`
-	Url   string `json:"url"`
+	Time     string
+	Title    string
+	Url      string
+	Duration int
 }
 
 type day []scheduling
@@ -54,11 +55,19 @@ func FetchMonth(year, month int) Month {
 			title := s.Find(".cal-film-texto").Text()
 			time := s.Find(".cal-film-hora").Text()
 			url, _ := s.Find(".pasemodalficha > a").Attr("href")
+			rawDetails := s.Find(".textmodalficha > .tecnica > .tecnica2").Text()
+			details := strings.Split(trim(rawDetails), "·")
+			rawDuration := trim(strings.Trim(details[len(details)-1], "'"))
+			duration, err := strconv.Atoi(rawDuration)
+			if err != nil {
+				duration = 120
+			}
 
 			day = append(day, scheduling{
-				Time:  trim(time),
-				Title: trim(title),
-				Url:   url,
+				Time:     trim(time),
+				Title:    trim(title),
+				Url:      url,
+				Duration: duration,
 			})
 
 			fullDate := fmt.Sprintf("%d-%02d-%02d", year, month, dayNumber)
